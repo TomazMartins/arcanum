@@ -3,7 +3,8 @@
 
 \LoadClass[12pt,twocolumn,twoside]{book}
 \RequirePackage{titlesec}
-\RequirePackage{color}
+\RequirePackage{xcolor}
+\RequirePackage[many]{tcolorbox}
 
 
 % ======================================
@@ -11,6 +12,8 @@
 % ======================================
 \definecolor{blue}{RGB}{41,5,195}
 \definecolor{darkblue}{RGB}{0, 0, 153}
+\definecolor{manganeseblue}{RGB}{3,168,158}
+\definecolor{cyan}{RGB}{0,139,139}
 \definecolor{white}{RGB}{255, 255, 255}
 \definecolor{gray}{RGB}{242, 242, 242}
 \definecolor{green}{RGB}{0, 153, 0}
@@ -22,8 +25,10 @@
 % ======================================
 %              TITLE STYLE
 % ======================================
+
+% ============= Chapter ================
 \titleformat{\chapter}
-[display]
+[frame]
 {
   \Huge
   \bfseries
@@ -35,14 +40,58 @@
 {\centering}
 []
 
+
+% ============= Section ================
 \titleformat{\section}
+[hang]
+{
+  \Large
+  \bfseries
+  \raggedright
+  \color{cyan}
+}
+{}
+{0cm}
+{\raggedright}
+[\titlerule]
+
+% =========== Subsection ===============
+\titleformat{\subsection}
+[hang]
 {
   \large
   \bfseries
   \raggedright
-  \color{blue}
+  \color{manganeseblue}
 }
 {}
 {0cm}
+{\raggedright}
+[]
+
+% ========== Subsubsection =============
+\titleformat{\subsubsection}
+[hang]
+{
+  \normalsize
+  \bfseries
+  \raggedright
+  \color{manganeseblue}
+}
 {}
-[\titlerule]
+{0cm}
+{\raggedright}
+[]
+
+
+% ======================================
+%                 BLOCKS
+% ======================================
+
+% ======== Description Block ===========
+\newcommand{\descriptionblock}[2]
+{
+  \begin{tcolorbox}[enhanced,title=#1, attach boxed title to top left]
+  #2
+  \end{tcolorbox}
+}
