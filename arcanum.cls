@@ -1,11 +1,19 @@
+% ======================================
+%              INITIAL
+% ======================================
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{arcanum}[2016/7/16 Documents with RPG content]
 
-\LoadClass[12pt,twocolumn,twoside]{book}
-\RequirePackage{titlesec}
-\RequirePackage{xcolor}
-\RequirePackage[many]{tcolorbox}
-\RequirePackage{varwidth}
+\LoadClass[10pt,twocolumn,twoside]{book} % Class Base
+
+% ========= Require Packages ===========
+\RequirePackage{titlesec}           % change titles
+\RequirePackage{xcolor}             % access definition of colors
+\RequirePackage[many]{tcolorbox}    % access the color boxes
+\RequirePackage{varwidth}           % change width
+\RequirePackage{lcg}                % generate randomic numbers
+\RequirePackage{calc}                % do calculations
 
 
 % ======================================
@@ -86,6 +94,110 @@
 
 
 % ======================================
+%               COMMANDS
+% ======================================
+
+% ============== Dices =================
+\newcommand{\dice}[2]
+{
+  \newcounter{result}
+  \setcounter{result}{0}
+  
+  \foreach \i in {1,...,#1}
+  {
+    \reinitrand[seed=\i,last=#2,counter=dice] \rand
+    \setcounter{result}{\value{result}+\value{dice}}
+  }
+  
+  \theresult
+}
+
+\newcommand{\dfour}[1]
+{
+  \newcounter{result}
+  \setcounter{result}{0}
+  
+  \foreach \i in {1,...,#1}
+  {
+    \reinitrand[seed=\i,last=4,counter=dice] \rand
+    \setcounter{result}{\value{result}+\value{dice}}
+  }
+  
+  \theresult
+}
+
+\newcommand{\dsix}[1]
+{
+  \newcounter{result}
+  \setcounter{result}{0}
+  
+  \foreach \i in {1,...,#1}
+  {
+    \reinitrand[seed=\i,last=6,counter=dice] \rand
+    \setcounter{result}{\value{result}+\value{dice}}
+  }
+  
+  \theresult
+}
+
+\newcommand{\deight}[1]
+{
+  \newcounter{result}
+  \setcounter{result}{0}
+  
+  \foreach \i in {1,...,#1}
+  {
+    \reinitrand[seed=\i,last=8,counter=dice] \rand
+    \setcounter{result}{\value{result}+\value{dice}}
+  }
+  
+  \theresult
+}
+
+\newcommand{\dten}[1]
+{
+  \newcounter{result}
+  \setcounter{result}{0}
+  
+  \foreach \i in {1,...,#1}
+  {
+    \reinitrand[seed=\i,last=10,counter=dice] \rand
+    \setcounter{result}{\value{result}+\value{dice}}
+  }
+  
+  \theresult
+}
+
+\newcommand{\dtwelve}[1]
+{
+  \newcounter{result}
+  \setcounter{result}{0}
+  
+  \foreach \i in {1,...,#1}
+  {
+    \reinitrand[seed=\i,last=12,counter=dice] \rand
+    \setcounter{result}{\value{result}+\value{dice}}
+  }
+  
+  \theresult
+}
+
+\newcommand{\dtwenty}[1]
+{
+  \newcounter{result}
+  \setcounter{result}{0}
+  
+  \foreach \i in {1,...,#1}
+  {
+    \reinitrand[seed=\i,last=20,counter=dice] \rand
+    \setcounter{result}{\value{result}+\value{dice}}
+  }
+  
+  \theresult
+}
+
+
+% ======================================
 %                 BLOCKS
 % ======================================
 
@@ -129,11 +241,11 @@
 }
 
 % ============ Stat Block ==============
-\newtcolorbox{statbox}[1]
+\newtcolorbox{statbox}[2]
 {
   beamer,
   skin=beamerfirst,
-  title={#1},
+  title={#1 (#2)},
   fonttitle=\bfseries,
   colbacktitle=darkblue,
   colback=cyan!5,
@@ -142,9 +254,26 @@
   sharp corners
 }
 
-\newenvironment{statblock}[1]
+\newenvironment{statblock}[8][]
 {
-  \begin{statbox}{#1}
+  % Basic Skills
+  \newcounter{for} \setcounter{for}{#3}
+  \newcounter{des} \setcounter{des}{#4}
+  \newcounter{con} \setcounter{con}{#5}
+  \newcounter{int} \setcounter{int}{#6}
+  \newcounter{sab} \setcounter{sab}{#7}
+  \newcounter{car} \setcounter{car}{#8}
+
+  \newcommand{\nd}[1]{ND ##1,}
+  \newcommand{\type}[1]{##1;}
+  \newcommand{\dv}[2]{DV ##1d##2; \dice{##1}{##2} PV,}
+
+  \newcommand{\basic}[4]
+  {
+    \nd{##1} \type{##2} \dv{##3}{##4}
+  }
+
+  \begin{statbox}{#2}{#1}
 }
 {
   \end{statbox}
