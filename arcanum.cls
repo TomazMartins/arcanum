@@ -5,6 +5,7 @@
 \RequirePackage{titlesec}
 \RequirePackage{xcolor}
 \RequirePackage[many]{tcolorbox}
+\RequirePackage{varwidth}
 
 
 % ======================================
@@ -89,9 +90,35 @@
 % ======================================
 
 % ======== Description Block ===========
-\newcommand{\descriptionblock}[2]
-{
-  \begin{tcolorbox}[enhanced,title=#1, attach boxed title to top left]
-  #2
-  \end{tcolorbox}
+\newtcolorbox{descriptionblock}[1]{
+  enhanced,
+  before skip=2mm,
+  after skip=2mm,
+  colback=red!5,
+  colframe=black!50,
+  boxrule=0.2mm,
+  attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight},
+  varwidth boxed title*=-3cm,
+  boxed title style={
+    frame code={
+      \path[fill=tcbcol@back!30!black]
+      ([yshift=-1mm,xshift=-1mm]frame.north west)
+      arc[start angle=0,end angle=180,radius=1mm]
+      ([yshift=-1mm,xshift=1mm]frame.north east)
+      arc[start angle=180,end angle=0,radius=1mm];
+
+      \path[left color=tcbcol@back!60!black,right color=tcbcol@back!60!black,
+      middle color=tcbcol@back!80!black]
+      ([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+      [rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+      -- (frame.south east) -- (frame.south west)
+      -- ([xshift=-1mm,yshift=-1mm]frame.north west)
+      [sharp corners]-- cycle;
+    },
+    interior engine=empty,
+  },
+  fonttitle=\bfseries,
+  colbacktitle=red,
+  drop fuzzy shadow,
+  title={#1}
 }
