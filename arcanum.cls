@@ -90,14 +90,18 @@
 % ======================================
 
 % ======== Description Block ===========
-\newtcolorbox{descriptionblock}[1]{
+\newtcolorbox{descriptionblock}[1]
+{
   enhanced,
   before skip=2mm,
   after skip=2mm,
   colback=red!5,
   colframe=black!50,
-  boxrule=0.2mm,
-  attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight},
+  boxrule=0.05pt,
+  attach boxed title to top left={
+    xshift=0.5cm,
+    yshift*=1mm-\tcboxedtitleheight
+  },
   varwidth boxed title*=-3cm,
   boxed title style={
     frame code={
@@ -119,6 +123,29 @@
   },
   fonttitle=\bfseries,
   colbacktitle=red,
-  drop fuzzy shadow,
+  drop small lifted shadow,
+  sharp corners,
   title={#1}
+}
+
+% ============ Stat Block ==============
+\newtcolorbox{statbox}[1]
+{
+  beamer,
+  skin=beamerfirst,
+  title={#1},
+  fonttitle=\bfseries,
+  colbacktitle=darkblue,
+  colback=cyan!5,
+  colframe=black!50,
+  boxrule=0.1pt,
+  sharp corners
+}
+
+\newenvironment{statblock}[1]
+{
+  \begin{statbox}{#1}
+}
+{
+  \end{statbox}
 }
